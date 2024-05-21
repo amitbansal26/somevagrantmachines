@@ -1,4 +1,3 @@
-ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 username=""
 password=""
 VAGRANT_BOX         = "generic/rhel9"
@@ -89,5 +88,7 @@ Vagrant.configure(2) do |config|
           v.cpus    = CPUS_WORKER_NODE
         end
         end 
-     end 
+     end
+
+     
 end
