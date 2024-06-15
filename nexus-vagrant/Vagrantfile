@@ -13,22 +13,18 @@ Vagrant.configure(2) do |config|
     (1..nexusCount).each do |i|
   
       config.vm.define "nexus" do |masternode|
-      masternode.vm.provision "file", source: "/home/amit/.ssh/id_rsa.pub", destination: "~/.ssh/me.pub"
-      masternode.vm.provision "shell", inline: <<-SHELL
-        cat /home/vagrant/.ssh/me.pub >> /home/vagrant/.ssh/authorized_keys
-      SHELL
+        masternode.vm.provision "file", source: "/root/.ssh/id_rsa.pub", destination: "~/.ssh/me.pub"
+        masternode.vm.provision "shell", inline: <<-SHELL
+          cat /home/vagrant/.ssh/me.pub >> /root/.ssh/authorized_keys
+        SHELL
         masternode.vm.box               = VAGRANT_BOX
         masternode.vm.box_check_update  = false
         masternode.vm.box_version       = VAGRANT_BOX_VERSION
         masternode.vm.hostname          = "nexus"
   
-        masternode.vm.network "private_network", ip: "172.16.16.20#{i+2}"
+        masternode.vm.network "private_network", ip: "172.16.16.215"
         masternode.vm.network "forwarded_port", guest: 8081, host: 8081
-        masternode.vm.provider :virtualbox do |v|
-          v.name   = "nexus"
-          v.memory = 2048
-          v.cpus   = 2
-        end
+       
         masternode.vm.provider :libvirt do |v|
           v.nested  = true
           v.memory  = 4096
